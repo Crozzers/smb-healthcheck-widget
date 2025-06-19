@@ -12,14 +12,14 @@ class Program
 
         foreach (var share in SMBShare.Enumerate())
         {
-            Console.WriteLine($"{share.Address}/{share.Share}: ok");
-            // if (share.IsConnected())
-            // {
-            // }
-            // else
-            // {
-            //     Console.WriteLine($"{share.Address}/{share.Share}: {share.Diagnose()}");
-            // }
+            if (share.IsConnected())
+            {
+                Console.WriteLine($"{share.Address}/{share.Share}: ok");
+            }
+            else
+            {
+                Console.WriteLine($"{share.Address}/{share.Share}: {share.Diagnose()}");
+            }
         }
         return 0;
     }

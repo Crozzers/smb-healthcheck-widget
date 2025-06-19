@@ -1,12 +1,19 @@
 using Utils;
 using System.Management;
 using System.Text.RegularExpressions;
+using System.Runtime.Versioning;
 
 namespace WindowsSMB;
 
+[SupportedOSPlatform("windows")]
 public class SMBShare : SMBShareBase, ISMBShare<SMBShare>
 {
-    public SMBShare(string address, string share) : base(address, share) { }
+    public SMBShare(string address, string share, string letter) : base(address, share)
+    {
+        Letter = letter;
+    }
+
+    string Letter { get; init; }
 
     public new static List<SMBShare> Enumerate()
     {
@@ -18,14 +25,13 @@ public class SMBShare : SMBShareBase, ISMBShare<SMBShare>
         );
         foreach (ManagementObject drive in searcher.Get())
         {
-            var provider = drive["ProviderName"].ToString();
-            if (Regex.Match(provider, @"\\\\([^\\]+)").Groups[1] == null)
+            if (drive["ProviderName"] == null)
             {
                 continue;
             }
-            provider = provider.Trim('\\');
+            var provider = drive["ProviderName"].ToString().Trim('\\');
             var address = provider.Split("\\")[0];
-            shares.Add(new SMBShare(address, provider.Replace(address, "").Trim('\\')));
+            shares.Add(new SMBShare(address, provider.Replace(address, "").Trim('\\'), (string)drive["Name"]));
         }
 
         return shares;
@@ -33,6 +39,6 @@ public class SMBShare : SMBShareBase, ISMBShare<SMBShare>
 
     public override bool IsConnected()
     {
-        return false;
+        return Directory.Exists(Letter);
     }
 }
