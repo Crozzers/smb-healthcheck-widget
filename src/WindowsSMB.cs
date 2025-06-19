@@ -1,6 +1,5 @@
 using Utils;
 using System.Management;
-using System.Text.RegularExpressions;
 using System.Runtime.Versioning;
 
 namespace WindowsSMB;
