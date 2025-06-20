@@ -1,7 +1,29 @@
-using smb_healthcheck_widget;
+#if _WINDOWS
+using SysTray;
+#else
+using LinuxSMB;
+#endif
 
-var builder = Host.CreateApplicationBuilder(args);
-builder.Services.AddHostedService<Worker>();
+namespace smb_healthcheck_widget;
 
-var host = builder.Build();
-host.Run();
+public class Program
+{
+    static void Main()
+    {
+#if _WINDOWS
+        var systray = new Systray();
+        systray.Run();
+#else
+    foreach (var share in SMBShare.Enumerate()) {
+        if (share.IsConnected())
+        {
+            Console.Writeline($"{share.Address}/{share.Share}: ok");
+        }
+        else
+        {
+            Console.Writeline($"{share.Address}/{share.Share}: {share.Diagnose()}");
+        }
+    }
+#endif
+    }
+}
