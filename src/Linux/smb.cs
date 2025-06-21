@@ -50,4 +50,21 @@ public class SMBShare : SMBShareBase, ISMBShare<SMBShare>
         }
         return false;
     }
+
+    public string? GetMountPoint()
+    {
+        var reader = new StreamReader("/proc/mounts");
+        string? line;
+        while ((line = reader.ReadLine()) != null)
+        {
+            var drive = line.Split([' ', '\t'])[0];
+            var mount = line.Split([' ', '\t'])[1];
+
+            if (drive == $"//{Address}/{Share}")
+            {
+                return mount;
+            }
+        }
+        return null;
+    }
 }

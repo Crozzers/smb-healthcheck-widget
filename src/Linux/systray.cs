@@ -3,12 +3,13 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Controls;
 using SMBUtils;
 using Avalonia.Media.Imaging;
-using System.Windows.Input;
+using Utils;
 
 namespace SysTray;
 
 public class Systray
 {
+
     public Systray() { }
 
     public void Run()
@@ -22,10 +23,11 @@ public class Systray
                      .LogToTrace();
 }
 
-public class App : Application
+class App : Application
 {
     NativeMenu? Menu = null;
     CancellationTokenSource _cts;
+
     public override void OnFrameworkInitializationCompleted()
     {
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
@@ -105,6 +107,14 @@ public class App : Application
             var menuItem = new NativeMenuItem(text)
             {
                 Icon = new Bitmap($"assets/{icon}_dot.ico")
+            };
+            menuItem.Click += (_, _) =>
+            {
+                var mountPoint = share.GetMountPoint();
+                if (mountPoint != null)
+                {
+                    FileUtils.OpenDirectory(mountPoint);
+                }
             };
             Menu.Items.Insert(0, menuItem);
         }

@@ -1,3 +1,5 @@
+using System.Diagnostics;
+using System.Runtime.InteropServices;
 using SMBLibrary;
 using SMBLibrary.Client;
 
@@ -65,4 +67,53 @@ public abstract class SMBShareBase: ISMBShare<SMBShareBase>
     }
 
     public abstract bool IsConnected();
+}
+
+
+public class FileUtils
+{
+    public static void OpenDirectory(string directory)
+    {
+        var explorer = FindFileExplorer();
+        if (explorer == null)
+        {
+            return;
+        }
+
+        var process = new ProcessStartInfo()
+        {
+            FileName = explorer,
+            Arguments = directory
+        };
+        Process.Start(process);
+    }
+
+    private static string? FindFileExplorer()
+    {
+        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+        {
+            return "explorer.exe";
+        }
+        foreach (var explorer in (string[])["xdg-open", "nautilus", "dolphin"])
+        {
+            if (ExecutableExists(explorer))
+            {
+                return explorer;
+            }
+        }
+        return null;
+    }
+
+    private static bool ExecutableExists(string exe)
+    {
+        foreach (var path in Environment.GetEnvironmentVariable("PATH").Split(Path.PathSeparator))
+        {
+            var fullPath = Path.Combine(path, exe);
+            if (File.Exists(fullPath))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 }
