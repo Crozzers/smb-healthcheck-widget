@@ -55,7 +55,12 @@ class Systray
                 icon = "red";
             }
 
-            var menuItem = new ToolStripMenuItem(text, Image.FromFile($"assets/{icon}_dot.ico"));
+            var menuItem = new ToolStripMenuItem(
+                text,
+                Image.FromFile($"assets/{icon}_dot.ico"),
+                (_, _) => FileUtils.OpenDirectory(share.Letter)
+
+            );
             ContextMenu.Items.Insert(0, menuItem);
         }
     }

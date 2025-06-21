@@ -12,7 +12,7 @@ public class SMBShare : SMBShareBase, ISMBShare<SMBShare>
         Letter = letter;
     }
 
-    string Letter { get; init; }
+    public string Letter { get; init; }
 
     public new static List<SMBShare> Enumerate()
     {
