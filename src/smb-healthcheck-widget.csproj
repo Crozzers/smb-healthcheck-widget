@@ -6,7 +6,8 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>smb_healthcheck_widget</RootNamespace>
-    <ApplicationIcon>assets/icon32_green.ico</ApplicationIcon>
+    <ApplicationIcon>assets/icon32.ico</ApplicationIcon>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(OS)' == 'Windows_NT' ">
@@ -20,9 +21,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="./*.cs" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.4" />
     <PackageReference Include="SMBLibrary" Version="1.5.4" />
     <PackageReference Include="System.Management" Version="9.0.6" />
+    <PackageReference Include="Avalonia" Version="11.3.1" Condition="$([MSBuild]::IsOsPlatform('Linux'))" />
+    <PackageReference Include="Avalonia.Desktop" Version="11.3.1" Condition="$([MSBuild]::IsOsPlatform('Linux'))" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.7.250606001" Condition="$([MSBuild]::IsOsPlatform('Windows'))" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(OS)' == 'Windows_NT' ">
+    <Compile Include="Windows/*.cs" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(OS)' != 'Windows_NT' ">
+    <Compile Include="Linux/*.cs" />
   </ItemGroup>
 </Project>

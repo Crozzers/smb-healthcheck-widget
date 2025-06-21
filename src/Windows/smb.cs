@@ -2,7 +2,7 @@ using Utils;
 using System.Management;
 using System.Runtime.Versioning;
 
-namespace WindowsSMB;
+namespace SMBUtils;
 
 [SupportedOSPlatform("windows")]
 public class SMBShare : SMBShareBase, ISMBShare<SMBShare>

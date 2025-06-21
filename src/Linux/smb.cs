@@ -1,7 +1,7 @@
 using Utils;
 using System.Runtime.Versioning;
 
-namespace LinuxSMB;
+namespace SMBUtils;
 
 [SupportedOSPlatform("linux")]
 public class SMBShare : SMBShareBase, ISMBShare<SMBShare>

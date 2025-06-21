@@ -1,9 +1,5 @@
-#if _WINDOWS
 using Microsoft.VisualBasic;
-using WindowsSMB;
-#else
-using LinuxSMB;
-#endif
+using SMBUtils;
 
 namespace SysTray;
 
