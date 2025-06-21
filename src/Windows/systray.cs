@@ -20,7 +20,7 @@ class Systray
         TrayIcon = new NotifyIcon
         {
             Text = "Sambda Healthcheck Widget",
-            Icon = new Icon("assets/icon32.ico", 40, 40),
+            Icon = new Icon(FileUtils.LocalFilePath("assets/icon32.ico"), 40, 40),
             Visible = true
         };
 
@@ -57,7 +57,7 @@ class Systray
 
             var menuItem = new ToolStripMenuItem(
                 text,
-                Image.FromFile($"assets/{icon}_dot.ico"),
+                Image.FromFile(FileUtils.LocalFilePath($"assets/{icon}_dot.ico")),
                 (_, _) => FileUtils.OpenDirectory(share.Letter)
 
             );

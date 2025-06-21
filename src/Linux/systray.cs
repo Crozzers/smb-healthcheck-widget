@@ -34,7 +34,7 @@ class App : Application
         {
             var trayIcon = new TrayIcon
             {
-                Icon = new WindowIcon("assets/icon32.ico"), // Or use Embedded resource
+                Icon = new WindowIcon(FileUtils.LocalFilePath("assets/icon32.ico")),
                 ToolTipText = "Samba Healthcheck Widget"
             };
 
@@ -106,7 +106,7 @@ class App : Application
 
             var menuItem = new NativeMenuItem(text)
             {
-                Icon = new Bitmap($"assets/{icon}_dot.ico")
+                Icon = new Bitmap(FileUtils.LocalFilePath($"assets/{icon}_dot.ico"))
             };
             menuItem.Click += (_, _) =>
             {

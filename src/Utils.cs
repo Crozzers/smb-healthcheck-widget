@@ -72,6 +72,10 @@ public abstract class SMBShareBase: ISMBShare<SMBShareBase>
 
 public class FileUtils
 {
+    public static string LocalFilePath(string path)
+    {
+        return Path.Combine(Directory.GetParent(Environment.ProcessPath).FullName, path);
+    }
     public static void OpenDirectory(string directory)
     {
         var explorer = FindFileExplorer();
