@@ -48,6 +48,14 @@ class Systray
             {
                 text = $"{share.Address}/{share.Share}: ok";
                 icon = "green";
+
+                var storage = share.GetStorageSize();
+                if (storage != null)
+                {
+                    var used = (int)(storage.Value.Used / 1_000_000_000);
+                    var total = (int)(storage.Value.Total / 1_000_000_000);
+                    text = $"{text} ({used}GB / {total}GB)";
+                }
             }
             else
             {
@@ -58,7 +66,7 @@ class Systray
             var menuItem = new ToolStripMenuItem(
                 text,
                 Image.FromFile(FileUtils.LocalFilePath($"assets/{icon}_dot.ico")),
-                (_, _) => FileUtils.OpenDirectory(share.Letter)
+                (_, _) => FileUtils.OpenDirectory(share.GetMountPoint())
 
             );
             ContextMenu.Items.Insert(0, menuItem);

@@ -51,7 +51,7 @@ public class SMBShare : SMBShareBase, ISMBShare<SMBShare>
         return false;
     }
 
-    public string? GetMountPoint()
+    public override string? GetMountPoint()
     {
         var reader = new StreamReader("/proc/mounts");
         string? line;

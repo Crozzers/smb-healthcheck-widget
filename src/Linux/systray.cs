@@ -97,6 +97,14 @@ class App : Application
             {
                 text = $"{share.Address}/{share.Share}: ok";
                 icon = "green";
+
+                var storage = share.GetStorageSize();
+                if (storage != null)
+                {
+                    var used = (int)(storage.Value.Used / 1_000_000_000);
+                    var total = (int)(storage.Value.Total / 1_000_000_000);
+                    text = $"{text} ({used}GB / {total}GB)";
+                }
             }
             else
             {

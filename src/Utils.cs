@@ -61,6 +61,21 @@ public abstract class SMBShareBase: ISMBShare<SMBShareBase>
         return SMBDiagnosis.Unknown;
     }
 
+    public abstract string? GetMountPoint();
+
+    public (long Used, long Total)? GetStorageSize()
+    {
+        var mount = GetMountPoint();
+        foreach (var drive in DriveInfo.GetDrives())
+        {
+            if (drive.VolumeLabel == mount)
+            {
+                return (drive.TotalSize - drive.AvailableFreeSpace, drive.TotalSize);
+            }
+        }
+        return null;
+    }
+
     public static List<SMBShareBase> Enumerate()
     {
         throw new NotImplementedException();

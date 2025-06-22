@@ -36,6 +36,11 @@ public class SMBShare : SMBShareBase, ISMBShare<SMBShare>
         return shares;
     }
 
+    public override string? GetMountPoint()
+    {
+        return Letter;
+    }
+
     public override bool IsConnected()
     {
         return Directory.Exists(Letter);
