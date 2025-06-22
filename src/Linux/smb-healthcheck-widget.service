@@ -1,9 +1,11 @@
 [Unit]
 Description=Samba Healthcheck Widget
 After=graphical-session.target
+Requires=graphical-session.target
 
 [Service]
 ExecStart=%h/.local/bin/smb-healthcheck-widget
+ExecStartPre=/bin/sleep 30
 
 [Install]
 WantedBy=default.target
