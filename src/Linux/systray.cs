@@ -128,7 +128,7 @@ class App : Application
         }
 
         // now add the refresh button
-        var refreshItem = new NativeMenuItem($"Refresh (last: {DateTime.Now.Hour}:{DateTime.Now.Minute})");
+        var refreshItem = new NativeMenuItem($"Refresh (last: {DateTime.Now.Hour:D2}:{DateTime.Now.Minute:D2})");
         refreshItem.Click += (_, _) => PopulateMenu();
         Menu.Items.Insert(Menu.Items.Count - 1, new NativeMenuItemSeparator());
         Menu.Items.Insert(Menu.Items.Count - 1, refreshItem);
